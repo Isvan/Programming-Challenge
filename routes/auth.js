@@ -56,9 +56,9 @@ var auth = {
     }
 
     // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = auth.validate(username, password);
+    var dbUserObj = auth.registerUser(username, password);
 
-    if (!dbUserObj) { // If authentication fails, we send a 401 back
+    if (!dbUserObj) { // If registration fails, we send a 401 back
       res.status(401);
       res.json({
         "status": 401,
@@ -104,7 +104,7 @@ function genToken(user) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({
     exp: expires
-  }, require('../config/secret')());
+  }, require('../config')());
 
   return {
     token: token,

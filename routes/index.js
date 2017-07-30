@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var auth = require('./auth.js');
-var products = require('./products.js');
-var user = require('./users.js');
+var products = require('./apiCommands.js');
 
 /*
  * Routes that can be accessed by any one
@@ -12,14 +11,14 @@ var user = require('./users.js');
 //Log in and get a token
 router.post('/login', auth.login);
 //Register and create token
-router.post('/register', auth.login);
+router.post('/register', auth.register);
 
 
 /*
  * Routes that can be accessed only by autheticated users
  */
-router.get('/api/getInt', products.getInt);
-router.post('/api/setInt', products.setInt);
+router.get('/api/getInt', apiCommands.getInt);
+router.post('/api/setInt', apiCommands.setInt);
 
 
 
