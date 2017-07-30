@@ -96,6 +96,19 @@ register: function(req,res) {
     return dbUserObj;
   },
 
+  validateUser: function(username,token) {
+    // spoofing the DB response for simplicity
+    var dbUserObj = { // spoofing a userobject from the DB.
+      name: 'arvind',
+      role: 'admin',
+      username: 'arvind@myapp.com'
+    };
+
+    console.log("Spoof DB validate");
+
+    return dbUserObj;
+  },
+
   registerUser: function(username,password) {
     // spoofing the DB response for simplicity
     var dbUserObj = { // spoofing a userobject from the DB.
@@ -115,9 +128,9 @@ register: function(req,res) {
 // private method
 function genToken(user) {
   var expires = expiresIn(7); // 7 days
-  var token = jwt.encode({
+  var token = jwt.sign({
     exp: expires
-  }, require('../config.js')());
+  }, require('../config.js').secret);
 
   return {
     token: token,
