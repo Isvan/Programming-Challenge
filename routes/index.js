@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var auth = require('./auth.js');
-var products = require('./apiCommands.js');
+var apiCommands = require('./apiCommands.js');
 
 /*
  * Routes that can be accessed by any one

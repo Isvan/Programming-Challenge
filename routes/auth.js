@@ -7,6 +7,9 @@ var auth = {
 
   login: function(req, res) {
 
+    console.log("login");
+
+
     var username = req.body.username || '';
     var password = req.body.password || '';
 
@@ -41,7 +44,11 @@ var auth = {
 
   },
 
-  register: function(req,res) {
+register: function(req,res) {
+
+
+    console.log("register " + JSON.stringify(req.body));
+
 
     var username = req.body.username || '';
     var password = req.body.password || '';
@@ -75,7 +82,7 @@ var auth = {
       res.json(genToken(dbUserObj));
     }
 
-  }
+  },
   validate: function(username, password) {
     // spoofing the DB response for simplicity
     var dbUserObj = { // spoofing a userobject from the DB.
@@ -83,6 +90,8 @@ var auth = {
       role: 'admin',
       username: 'arvind@myapp.com'
     };
+
+    console.log("Spoof DB validate");
 
     return dbUserObj;
   },
@@ -95,6 +104,10 @@ var auth = {
       username: 'arvind@myapp.com'
     };
 
+
+    console.log("Spoof DB Register");
+
+
     return dbUserObj;
   },
 }
@@ -104,7 +117,7 @@ function genToken(user) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({
     exp: expires
-  }, require('../config')());
+  }, require('../config.js')());
 
   return {
     token: token,
