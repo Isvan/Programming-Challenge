@@ -18,6 +18,7 @@ router.post('/register', auth.register);
  * Routes that can be accessed only by autheticated users
  */
 router.post('/api/getInt', apiCommands.getInt);
+router.post('/api/getNextInt', apiCommands.getNextInt);
 router.post('/api/setInt', apiCommands.setInt);
 
 module.exports = router;

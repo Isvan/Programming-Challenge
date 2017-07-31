@@ -33,6 +33,7 @@ Password <input type="password" id="regPass"/><br/>
   Number <input type="textbox" id="txtNum"/> <br/>
 
   <button type="button" id="btnNext">Get Next Num</button>
+  <button type="button" id="btnCur">Get Cur Num</button>
   <button type="button" id="btnSet">Set Num</button>
   <button type="button" id="btnBackNum">Back</button>
 
@@ -77,6 +78,11 @@ $( "#btnLog" ).click(function() {
 $( "#btnNext" ).click(function() {
     //Get the next num from the api
     nextNum();
+});
+
+$( "#btnCur" ).click(function() {
+    //Get the next num from the api
+    curNum();
 });
 
 $( "#btnSet" ).click(function() {
@@ -136,13 +142,38 @@ function setNum(){
 
 }
 
-function nextNum(){
+function curNum(){
 
   data = {
     "access_token":token
   }
 
 var result =   postToServer("/api/getInt",data);
+
+result.done(function(){
+    num = result.responseJSON.data.int;
+    $("#txtNum").val("" + num);
+});
+
+result.fail(function() {
+    $("#message").text(result.responseJSON.message);
+});
+
+result.always(function() {
+
+});
+
+
+
+}
+
+function nextNum(){
+
+  data = {
+    "access_token":token
+  }
+
+var result =   postToServer("/api/getNextInt",data);
 
 result.done(function(){
     num = result.responseJSON.data.int;

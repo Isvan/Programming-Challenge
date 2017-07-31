@@ -3,8 +3,37 @@ var User = require("../database/models/User.js");
 var apiCommands = {
 
   getInt: function(req, res) {
+    //See who the token belongs too then
+    //get current int from DB increase by one,
+    //Store in db
+    //Send to user
+
+    User.findOne({token:req.body.access_token}, function(err, user) {
+    if (err) throw err;
+
+    if(user){
+        res.status(200);
+        res.json(
+          {"data": {
+            "int":  user.int
+          }}
+        );
+
+    }else{
+      res.status(401);
+      res.json({
+        "status": 401,
+        "message": "Outdated/Invalid Token"
+      });
+    }
 
 
+  });
+
+
+  },
+
+  getNextInt: function(req, res) {
     //See who the token belongs too then
     //get current int from DB increase by one,
     //Store in db
