@@ -1,6 +1,6 @@
 module.exports = {
 
     'secret': 'notSoSecrectSecret',
-    'database': 'mongodb://isvan:badPass2017;localhost:27017/'
+    'database': 'mongodb://localhost:27017/'
 
 };

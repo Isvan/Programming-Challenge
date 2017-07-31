@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var mong = require('mongoose');
 
 var app = express();
 
@@ -21,10 +22,8 @@ app.all('/*', function(req, res, next) {
   }
 });
 
+
 // Auth Middleware - This will check if the token is valid
-// Only the requests that start with /api/v1/* will be checked for the token.
-// Any URL's that do not follow the below pattern should be avoided unless you
-// are sure that authentication is not needed
 app.all('/api/*', require('./validation/validateToken.js'));
 
 //This handles the login and register
@@ -39,6 +38,10 @@ app.use(function(req, res, next) {
 
 // Start the server
 app.set('port', process.env.PORT || 3005);
+
+// Connect to our databse
+//mong.createConnection(require('./config.js').database);
+mong.connect(require('./config.js').database);
 
 var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);
