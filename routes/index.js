@@ -13,6 +13,7 @@ router.post('/login', auth.login);
 //Register and create token
 router.post('/register', auth.register);
 
+
 /*
  * Routes that can be accessed only by autheticated users
  */

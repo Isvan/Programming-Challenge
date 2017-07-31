@@ -15,9 +15,12 @@ var apiCommands = {
 
     if(user){
         user.int = user.int + 1;
-      res.json({
-        "int":  user.int
-      });
+        res.status(200);
+        res.json(
+          {"data": {
+            "int":  user.int
+          }}
+        );
 
       user.save(function(err) {
         if (err) throw err;
@@ -60,9 +63,12 @@ var apiCommands = {
 
         if(user){
             user.int = intToStore
-          res.json({
-            "int":  user.int
-          });
+          res.status(200);
+          res.json(
+            {"data": {
+              "int":  user.int
+            }}
+          );
           user.save(function(err) {
             if (err) throw err;
 

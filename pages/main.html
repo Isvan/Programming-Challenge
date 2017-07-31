@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<title>Programing Challenge</title
+<body>
+
+<h1>Programming Challenge</h1>
+<h2 id="message"><h2>
+<div id="register">
+
+<h2> Register </h2>
+UserName <input type="textbox" id="regName"/> <br/>
+Password <input type="password" id="regPass"/><br/>
+<button type="button" id="btnReg">Register</button>
+<button type="button" id="btnBackReg">Back</button>
+
+</div>
+
+<div id="login">
+
+  <h2> Login </h2>
+  UserName <input type="textbox" id="regName"/> <br/>
+  Password <input type="password" id="regPass"/><br/>
+  <button type="button" id="btnRegLog">Register New </button>
+  <button type="button" id="btnLog">Log In</button>
+
+</div>
+
+<div id="numbers">
+
+
+  <h2> Numbers </h2>
+  Number <input type="textbox" id="txtNum"/> <br/>
+
+  <button type="button" id="btnNext">Get Next Num</button>
+  <button type="button" id="btnSet">Set Num</button>
+  <button type="button" id="btnBackNum">Back</button>
+
+
+
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+
+var token = "";
+
+$( "#btnReg" ).click(function() {
+    //Send a Register Post
+
+
+});
+
+$( "#btnBackReg" ).click(function() {
+    //Go back to the Login page
+
+
+});
+
+$( "#btnRegLog" ).click(function() {
+    //Go to register page
+
+});
+
+$( "#btnLog" ).click(function() {
+    //Log in
+
+});
+
+$( "#btnNext" ).click(function() {
+    //Get the next num from the api
+
+});
+
+$( "#btnSet" ).click(function() {
+    //Set the number
+
+});
+
+$( "#btnBackNum" ).click(function() {
+    //Back to Log in
+
+});
+
+
+
+
+function test(url){
+// The data we are going to send in our request
+  let data = {
+      access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDIwNzY4MjY1ODQsImlhdCI6MTUwMTQ3MjAyNn0.rgoCMrlylfWqyPoDG3rU6MWOjhmgRKNAOjXMmuUaLCk'
+    }
+// The parameters we are gonna pass to the fetch function
+  let fetchData = {
+      method: 'POST',
+      body: data,
+      headers: new Headers()
+    }
+
+fetch(url, fetchData) .then((resp) => resp.json())
+  .then(function(data) {
+    console.log(data);
+  });
+}
+
+
+
+
+function register(){
+
+  $('#name').val();
+
+}
+
+
+</script>
+
+</html>

@@ -1,5 +1,4 @@
 var jwt = require('jsonwebtoken');
-var db = require('../database/dataBaseOperations.js');
 var User = require("../database/models/User.js");
 
 
@@ -8,11 +7,6 @@ var User = require("../database/models/User.js");
 var auth = {
 
   login: function(req, res) {
-
-    console.log("login");
-
-
-
     var username = req.body.username || '';
     var password = req.body.password || '';
 
@@ -29,9 +23,7 @@ var auth = {
     auth.checkUser(username,function(found,user){
       if(found){
         //Found the username now to check the password
-        console.log(user);
-
-        user.comparePassword(password,function(err,match){
+          user.comparePassword(password,function(err,match){
 
             if(match){
               //Gen a new token
@@ -106,9 +98,6 @@ register: function(req,res) {
 
                 var token = genToken();
                 //Upload to the Db
-
-                console.log("Found = " + found);
-
                 var newUser = User({
                   username:username,
                   password:password,
@@ -145,28 +134,6 @@ register: function(req,res) {
 
   },
 
-  validate: function(username, password) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB.
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
-
-    console.log("Spoof DB validate");
-
-
-    User.find({}, function(err, users) {
-    if (err) throw err;
-
-    // object of all the users
-    console.log(users);
-    });
-
-
-    return dbUserObj;
-  },
-
   checkUser: function(username,cb){
 
     User.find({username:username}, function(err, user) {
@@ -181,25 +148,12 @@ register: function(req,res) {
     });
 
   },
-
-  validateUser: function(token) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB.
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
-
-    console.log("Spoof DB validate");
-
-    return dbUserObj;
-  }
 }
-
 
 // private method
 function genToken() {
-  var expires = expiresIn(7); // 7 days
+   // 7 days
+  var expires = expiresIn(7);
   var token = jwt.sign({
     exp: expires
   }, require('../config.js').secret);

@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var mong = require('mongoose');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -15,11 +15,7 @@ app.all('/*', function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,POST');
   // Set custom headers for CORS
   res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
-  if (req.method == 'OPTIONS') {
-    res.status(200).end();
-  } else {
-    next();
-  }
+  next();
 });
 
 
@@ -28,6 +24,10 @@ app.all('/api/*', require('./validation/validateToken.js'));
 
 //This handles the login and register
 app.use('/', require('./routes'));
+
+app.get('/', function(req, res){
+res.sendFile(__dirname + '/pages/main.html');
+});
 
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {
@@ -40,8 +40,9 @@ app.use(function(req, res, next) {
 app.set('port', process.env.PORT || 3005);
 
 // Connect to our databse
-//mong.createConnection(require('./config.js').database);
-mong.connect(require('./config.js').database);
+var promise = mongoose.connect(require('./config.js').database, {
+  useMongoClient: true,
+})
 
 var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);

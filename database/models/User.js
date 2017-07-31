@@ -12,7 +12,7 @@ var userSchema  = new Schema({
 });
 
 
-//Before we send anythign to the db check th
+//Before we send anythign to the db check the password for changes and apply salt as needed
 userSchema.pre('save', function (next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
@@ -33,6 +33,7 @@ userSchema.pre('save', function (next) {
     }
 });
 
+//Get a salted password and comepare it with a give
 userSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
