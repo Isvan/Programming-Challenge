@@ -5,7 +5,7 @@
 
 <h1>Programming Challenge</h1>
 <h2 id="message"><h2>
-<div id="register">
+<div id="register" hidden="true">
 
 <h2> Register </h2>
 UserName <input type="textbox" id="regName"/> <br/>
@@ -18,14 +18,15 @@ Password <input type="password" id="regPass"/><br/>
 <div id="login">
 
   <h2> Login </h2>
-  UserName <input type="textbox" id="regName"/> <br/>
-  Password <input type="password" id="regPass"/><br/>
-  <button type="button" id="btnRegLog">Register New </button>
+  UserName <input type="textbox" id="logName"/> <br/>
+  Password <input type="password" id="logPass"/><br/>
   <button type="button" id="btnLog">Log In</button>
+  <button type="button" id="btnRegLog">Register New </button>
+
 
 </div>
 
-<div id="numbers">
+<div id="numbers" hidden="true">
 
 
   <h2> Numbers </h2>
@@ -48,71 +49,170 @@ var token = "";
 
 $( "#btnReg" ).click(function() {
     //Send a Register Post
-
+    register();
 
 });
 
 $( "#btnBackReg" ).click(function() {
     //Go back to the Login page
-
+    $("#register").hide();
+    $("#login").show();
+    $("#numbers").hide();
 
 });
 
 $( "#btnRegLog" ).click(function() {
     //Go to register page
+    $("#register").show();
+    $("#login").hide();
+    $("#numbers").hide();
 
 });
 
 $( "#btnLog" ).click(function() {
     //Log in
-
+    login();
 });
 
 $( "#btnNext" ).click(function() {
     //Get the next num from the api
-
+    nextNum();
 });
 
 $( "#btnSet" ).click(function() {
     //Set the number
-
+    setNum();
 });
 
 $( "#btnBackNum" ).click(function() {
     //Back to Log in
+    $("#register").hide();
+    $("#login").show();
+    $("#numbers").hide();
+});
+
+
+function postToServer(url,data){
+// The data we are going to send in our request
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": url,
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json",
+    "cache-control": "no-cache",
+  },
+  "processData": false,
+  "data": JSON.stringify(data)
+}
+
+return  $.ajax(settings)
+
+}
+
+function setNum(){
+
+
+    data = {
+      "access_token":token,
+      "newInt":parseInt($("#txtNum").val())
+    }
+
+  var result =   postToServer("/api/setInt",data);
+
+  result.done(function(){
+      num = result.responseJSON.data.int;
+      $("#txtNum").val("" + num);
+  });
+
+  result.fail(function() {
+      $("#message").text(result.responseJSON.message);
+  });
+
+  result.always(function() {
+
+  });
+
+}
+
+function nextNum(){
+
+  data = {
+    "access_token":token
+  }
+
+var result =   postToServer("/api/getInt",data);
+
+result.done(function(){
+    num = result.responseJSON.data.int;
+    $("#txtNum").val("" + num);
+});
+
+result.fail(function() {
+    $("#message").text(result.responseJSON.message);
+});
+
+result.always(function() {
 
 });
 
 
 
-
-function test(url){
-// The data we are going to send in our request
-  let data = {
-      access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDIwNzY4MjY1ODQsImlhdCI6MTUwMTQ3MjAyNn0.rgoCMrlylfWqyPoDG3rU6MWOjhmgRKNAOjXMmuUaLCk'
-    }
-// The parameters we are gonna pass to the fetch function
-  let fetchData = {
-      method: 'POST',
-      body: data,
-      headers: new Headers()
-    }
-
-fetch(url, fetchData) .then((resp) => resp.json())
-  .then(function(data) {
-    console.log(data);
-  });
 }
 
+function login(){
 
+  data = {
+    "username":$('#logName').val(),
+    "password":$('#logPass').val()
+  }
 
+var result =   postToServer("/login",data);
+
+result.done(function(){
+    token = result.responseJSON.token;
+    $("#register").hide();
+    $("#login").hide();
+    $("#numbers").show();
+    $("#message").text("");
+});
+
+result.fail(function() {
+    $("#message").text(result.responseJSON.message);
+});
+
+result.always(function() {
+
+});
+
+}
 
 function register(){
+  data = {
+    "username":$('#regName').val(),
+    "password":$('#regPass').val()
+  }
 
-  $('#name').val();
+var result =   postToServer("/register",data);
+
+result.done(function(){
+    token = result.responseJSON.token;
+    $("#register").hide();
+    $("#login").hide();
+    $("#numbers").show();
+    $("#message").text("");
+});
+
+result.fail(function() {
+    $("#message").text(result.responseJSON.message);
+});
+
+result.always(function() {
+
+});
 
 }
-
 
 </script>
 

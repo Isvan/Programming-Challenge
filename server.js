@@ -31,9 +31,14 @@ res.sendFile(__dirname + '/pages/main.html');
 
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  // var err = new Error('Not Found');
+  // err.status = 404;
+  // next(err);
+  res.status(404);
+  res.json({
+    "error":"Page Not Found"
+  })
+
 });
 
 // Start the server

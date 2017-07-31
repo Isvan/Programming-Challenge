@@ -43,10 +43,11 @@ var apiCommands = {
 
   setInt: function(req, res) {
 
-    var intToStore = req.body.newInt;
+    var intToStore = (req.body.newInt);
 
     //Its negative thats a no go
     if(!Number.isInteger(intToStore) || intToStore < 0){
+      console.log("Bad int : " + intToStore);
       res.status(401);
       res.json({
         "status": 401,

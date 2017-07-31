@@ -79,6 +79,7 @@ register: function(req,res) {
         "status": 401,
         "message": "Invalid credentials"
       });
+      console.log("Blank Username/Pass" + JSON.stringify(req.body));
       return;
     }
 
